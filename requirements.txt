@@ -1,0 +1,9 @@
+gymnasium
+flappy-bird-gymnasium
+pygame
+
+torch
+numpy
+
+matplotlib
+tqdm
