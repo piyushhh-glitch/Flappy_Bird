@@ -4,6 +4,8 @@ import os
 import torch
 import torch.nn
 from dqn import DQN
+from experience_replay import ReplayMemory
+
 
 if torch.backends.mps.is_available:
     device="mps"
@@ -25,10 +27,17 @@ def run(self,is_training=True, render=False):
     policy_dqn=DQN(num_states,num_actions).to(device)
 
     state, _ = env.reset()
+
+    if is_training:
+        memory=ReplayMemory(10000)
+
     while True:
         # Next action:
         # (feed the observation to your agent here)
         action = env.action_space.sample()
+
+        if is_training:
+                memory.append((state,action,new_state,reward,terminated))
 
         # Processing:terminated -> done 
         next_state,reward, terminated, _, info = env.step(action)
