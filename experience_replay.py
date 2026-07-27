@@ -1,19 +1,18 @@
 from collections import deque
-import random 
+import random
 
-def ReplayMemory():
+class ReplayMemory():
+    
+    # create FIFO queue - experience replay
+    def __init__(self, maxlen, seed=None):
+        self.memory = deque([], maxlen=maxlen)
 
-    def __init__(self,maxlen,seed=None):
-        #Create FIFO queue-experience replay
-        self.memory=deque([],maxlen=maxlen)
-
-    def append(self,new_exp):
+    def append(self, new_exp):
         self.memory.append(new_exp)
 
+    def sample(self, sample_size):
+        return random.sample(self.memory, sample_size)
 
-    def sample(self,sample_size):
-        return random.sample(self.memory,sample_size)
-
-    #curr buffer size
+    # curr buffer size
     def __len__(self):
         return len(self.memory)
